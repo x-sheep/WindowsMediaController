@@ -17,22 +17,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <ui:NavigationView
-        x:Name="SongList" AutomationProperties.Name="SongList" AutomationProperties.AutomationId="SongList"
-        IsTitleBarAutoPaddingEnabled="True"
-        PaneDisplayMode="Left"
-        IsSettingsVisible="False"
-        IsBackButtonVisible="Collapsed"
-        OpenPaneLength="200"
-        IsPaneOpen="True"
-        >
-        <ui:NavigationView.MenuItems>
-            
-        </ui:NavigationView.MenuItems>
-        <Canvas Height="184" Width="640">
-            <Label x:Name="SongTitle" Content="TITLE" Canvas.Left="179" Canvas.Top="2" Height="64" Width="449" FontSize="50" FontFamily="Segoe UI BOLD"/>
-            <Label x:Name="SongAuthor" Content="Author" Canvas.Left="179" Canvas.Top="59" Height="35" Width="449" FontSize="25" FontFamily="Segoe UI"/>
-        </Canvas>
-    </ui:NavigationView>
-
+    <Canvas>
+        <Label x:Name="StatusText" Content="No session opened" Canvas.Left="16" Canvas.Top="8" Height="64" FontSize="16" FontFamily="Segoe UI"/>
+        <Label x:Name="SongTitle" Content="TITLE" Canvas.Left="16" Canvas.Top="42" Height="64" FontSize="50" FontFamily="Segoe UI BOLD"/>
+        <Label x:Name="SongAuthor" Content="Author" Canvas.Left="16" Canvas.Top="99" Height="35" FontSize="25" FontFamily="Segoe UI"/>
+    </Canvas>
 </Window>
