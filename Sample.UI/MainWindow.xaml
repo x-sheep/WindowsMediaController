@@ -6,20 +6,11 @@
         xmlns:local="clr-namespace:Sample.UI"
         mc:Ignorable="d"
         Title="MediaSession Stream thing" Height="300" Width="850"
-        xmlns:ui="http://schemas.modernwpf.com/2019"
-        ui:WindowHelper.UseModernWindowStyle="True">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ui:ColorPaletteResources Accent="#FF0078D7" />
-                <ResourceDictionary Source="pack://application:,,,/ModernWpf;component/ThemeResources/Dark.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/ModernWpf;component/ControlsResources.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
+        Background="Black"
+        xmlns:ui="http://schemas.modernwpf.com/2019">
     <Canvas>
-        <Label x:Name="StatusText" Content="No session opened" Canvas.Left="16" Canvas.Top="8" Height="64" FontSize="16" FontFamily="Segoe UI"/>
-        <Label x:Name="SongTitle" Content="TITLE" Canvas.Left="16" Canvas.Top="42" Height="64" FontSize="36" FontFamily="Segoe UI BOLD"/>
-        <Label x:Name="SongAuthor" Content="Author" Canvas.Left="16" Canvas.Top="88" Height="35" FontSize="25" FontFamily="Segoe UI"/>
+        <Label x:Name="StatusText" Foreground="White" Content="No session opened" Canvas.Left="16" Canvas.Top="8" FontSize="16" FontFamily="Segoe UI"/>
+        <Label x:Name="SongTitle" Foreground="White" Content="TITLE" Canvas.Left="16" Canvas.Top="42" FontSize="36" FontFamily="Segoe UI BOLD"/>
+        <Label x:Name="SongAuthor" Foreground="White" Content="Author" Canvas.Left="16" Canvas.Top="88" FontSize="25" FontFamily="Segoe UI"/>
     </Canvas>
 </Window>
