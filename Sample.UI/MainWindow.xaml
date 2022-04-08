@@ -19,7 +19,7 @@
     </Window.Resources>
     <Canvas>
         <Label x:Name="StatusText" Content="No session opened" Canvas.Left="16" Canvas.Top="8" Height="64" FontSize="16" FontFamily="Segoe UI"/>
-        <Label x:Name="SongTitle" Content="TITLE" Canvas.Left="16" Canvas.Top="42" Height="64" FontSize="50" FontFamily="Segoe UI BOLD"/>
-        <Label x:Name="SongAuthor" Content="Author" Canvas.Left="16" Canvas.Top="99" Height="35" FontSize="25" FontFamily="Segoe UI"/>
+        <Label x:Name="SongTitle" Content="TITLE" Canvas.Left="16" Canvas.Top="42" Height="64" FontSize="36" FontFamily="Segoe UI BOLD"/>
+        <Label x:Name="SongAuthor" Content="Author" Canvas.Left="16" Canvas.Top="88" Height="35" FontSize="25" FontFamily="Segoe UI"/>
     </Canvas>
 </Window>
