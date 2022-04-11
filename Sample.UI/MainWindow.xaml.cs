@@ -32,6 +32,7 @@ namespace Sample.UI
             InitializeComponent();
 
             mediaManager.OnAnyPlaybackStateChanged += MediaManager_OnAnyPlaybackStateChanged;
+            mediaManager.OnAnyMediaPropertyChanged += MediaManager_OnAnyMediaPropertyChanged;
             mediaManager.OnAnySessionOpened += MediaManager_OnAnySessionOpened;
             mediaManager.OnAnySessionClosed += MediaManager_OnAnySessionClosed;
 
@@ -40,6 +41,14 @@ namespace Sample.UI
             Application.Current.Dispatcher.Invoke(async () =>
             {
                 await LoadRandomSession();
+            });
+        }
+
+        private void MediaManager_OnAnyMediaPropertyChanged(MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties mediaProperties)
+        {
+            Application.Current.Dispatcher.Invoke(async () =>
+            {
+                await UpdateUI(mediaSession);
             });
         }
 
