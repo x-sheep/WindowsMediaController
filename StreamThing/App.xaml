@@ -1,6 +1,6 @@
-﻿<Application x:Class="Sample.UI.App"
+﻿<Application x:Class="StreamThing.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Sample.UI"
+             xmlns:local="clr-namespace:StreamThing"
              StartupUri="MainWindow.xaml">
 </Application>

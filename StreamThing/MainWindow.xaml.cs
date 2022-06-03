@@ -17,7 +17,7 @@ using Windows.Storage.Streams;
 using WindowsMediaController;
 using static WindowsMediaController.MediaManager;
 
-namespace Sample.UI
+namespace StreamThing
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
