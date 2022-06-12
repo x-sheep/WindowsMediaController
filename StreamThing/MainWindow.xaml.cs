@@ -121,5 +121,12 @@ namespace StreamThing
                 SongAuthor.Content = songInfo.Artist.Replace(" - Topic", "", StringComparison.InvariantCultureIgnoreCase);
             }
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var app = (App)Application.Current;
+            if (app.ConfigWidth.HasValue)
+                app.MainWindow.Width = app.ConfigWidth.Value;
+        }
     }
 }

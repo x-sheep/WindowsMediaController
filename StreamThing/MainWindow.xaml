@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MediaSession Stream thing" Height="300" Width="850"
         Background="Black"
+        Loaded="Window_Loaded"
         xmlns:ui="http://schemas.modernwpf.com/2019">
     <Canvas>
         <Label x:Name="StatusText" Foreground="White" Content="No session opened" Canvas.Left="16" Canvas.Top="8" FontSize="16" FontFamily="Segoe UI"/>
