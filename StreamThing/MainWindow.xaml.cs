@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,11 +12,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 using WindowsMediaController;
 using static WindowsMediaController.MediaManager;
+using System.Text.Json;
+using System.Diagnostics;
 
 namespace StreamThing
 {
@@ -125,8 +127,28 @@ namespace StreamThing
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var app = (App)Application.Current;
-            if (app.ConfigWidth.HasValue)
-                app.MainWindow.Width = app.ConfigWidth.Value;
+            if (app.Settings.Width.HasValue)
+                app.MainWindow.Width = Math.Max(100, app.Settings.Width.Value);
+
+            app.MainWindow.SizeChanged += MainWindow_SizeChanged;
+        }
+
+        private async void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var app = (App)Application.Current;
+            app.Settings.Width = (int)e.NewSize.Width;
+            try
+            {
+                var settingsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StreamThing");
+                Directory.CreateDirectory(settingsFolder);
+                var settingsPath = Path.Combine(settingsFolder, "settings.json");
+                using var stream = new FileStream(settingsPath, FileMode.Create);
+                await JsonSerializer.SerializeAsync(stream, app.Settings);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
     }
 }
