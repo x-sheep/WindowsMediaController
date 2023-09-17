@@ -26,6 +26,8 @@ namespace StreamThing
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static App App => (App)Application.Current;
+
         private static readonly MediaManager mediaManager = new MediaManager();
         private string? lastMediaSession = null;
 
@@ -37,6 +39,8 @@ namespace StreamThing
             mediaManager.OnAnyMediaPropertyChanged += MediaManager_OnAnyMediaPropertyChanged;
             mediaManager.OnAnySessionOpened += MediaManager_OnAnySessionOpened;
             mediaManager.OnAnySessionClosed += MediaManager_OnAnySessionClosed;
+
+            UpdatePopupMenu();
 
             mediaManager.Start();
 
@@ -94,6 +98,7 @@ namespace StreamThing
             StatusText.Content = "No session opened";
             SongTitle.Content = "";
             SongAuthor.Content = "";
+            StatusText.Visibility = App.Settings.MediaSourceVisibilty != MediaSourceVisibilty.Always ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void MediaManager_OnAnyPlaybackStateChanged(MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo playbackInfo)
@@ -121,34 +126,53 @@ namespace StreamThing
                 StatusText.Content = "Playing from " + lastMediaSession;
                 SongTitle.Content = songInfo.Title.ToUpper();
                 SongAuthor.Content = songInfo.Artist.Replace(" - Topic", "", StringComparison.InvariantCultureIgnoreCase);
+                StatusText.Visibility = App.Settings.MediaSourceVisibilty == MediaSourceVisibilty.Never ? Visibility.Hidden : Visibility.Visible;
+            }
+        }
+
+        private void UpdatePopupMenu()
+        {
+            var mediaSourceVisibilty = App.Settings.MediaSourceVisibilty;
+            foreach (var subview in DisplayMediaSourceOption.Items)
+            {
+                var option = (MenuItem)subview!;
+                var tag = (MediaSourceVisibilty)option.Tag;
+                option.IsChecked = mediaSourceVisibilty == tag;
+            }
+
+            if (mediaSourceVisibilty == MediaSourceVisibilty.Never ||
+                (mediaSourceVisibilty == MediaSourceVisibilty.WhenPlaying && !mediaManager.CurrentMediaSessions.Any())
+               )
+            {
+                StatusText.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                StatusText.Visibility = Visibility.Visible;
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var app = (App)Application.Current;
-            if (app.Settings.Width.HasValue)
-                app.MainWindow.Width = Math.Max(100, app.Settings.Width.Value);
+            if (App.Settings.Width.HasValue)
+                App.MainWindow.Width = Math.Max(100, App.Settings.Width.Value);
 
-            app.MainWindow.SizeChanged += MainWindow_SizeChanged;
+            App.MainWindow.SizeChanged += MainWindow_SizeChanged;
         }
 
         private async void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var app = (App)Application.Current;
-            app.Settings.Width = (int)e.NewSize.Width;
-            try
-            {
-                var settingsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StreamThing");
-                Directory.CreateDirectory(settingsFolder);
-                var settingsPath = Path.Combine(settingsFolder, "settings.json");
-                using var stream = new FileStream(settingsPath, FileMode.Create);
-                await JsonSerializer.SerializeAsync(stream, app.Settings);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+            App.Settings.Width = (int)e.NewSize.Width;
+            await App.SaveSettings();
+        }
+
+        private async void DisplayMediaSourceOption_Click(object sender, RoutedEventArgs e)
+        {
+            var newValue = (MediaSourceVisibilty)((MenuItem)sender).Tag;
+            App.Settings.MediaSourceVisibilty = newValue;
+            UpdatePopupMenu();
+
+            await App.SaveSettings();
         }
     }
 }

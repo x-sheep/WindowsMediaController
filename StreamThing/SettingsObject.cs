@@ -7,5 +7,14 @@ namespace StreamThing
     public class SettingsObject
     {
         public int? Width { get; set; } = null;
+
+        public MediaSourceVisibilty MediaSourceVisibilty { get; set; } = MediaSourceVisibilty.Always;
+    }
+
+    public enum MediaSourceVisibilty
+    {
+        Always,
+        WhenPlaying,
+        Never
     }
 }

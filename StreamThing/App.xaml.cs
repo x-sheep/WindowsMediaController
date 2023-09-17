@@ -38,5 +38,21 @@ namespace StreamThing
 
             Settings.Width = parsed.GetValueForOption(widthOption) ?? Settings.Width;
         }
+
+        public async Task SaveSettings()
+        {
+            try
+            {
+                var settingsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StreamThing");
+                Directory.CreateDirectory(settingsFolder);
+                var settingsPath = Path.Combine(settingsFolder, "settings.json");
+                using var stream = new FileStream(settingsPath, FileMode.Create);
+                await JsonSerializer.SerializeAsync(stream, Settings);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
     }
 }

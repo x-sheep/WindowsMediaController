@@ -9,6 +9,15 @@
         Background="Black"
         Loaded="Window_Loaded"
         xmlns:ui="http://schemas.modernwpf.com/2019">
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Display media source" Name="DisplayMediaSourceOption">
+                <MenuItem Tag="{x:Static local:MediaSourceVisibilty.Always}" Header="Always" Click="DisplayMediaSourceOption_Click"/>
+                <MenuItem Tag="{x:Static local:MediaSourceVisibilty.WhenPlaying}" Header="When playing" Click="DisplayMediaSourceOption_Click"/>
+                <MenuItem Tag="{x:Static local:MediaSourceVisibilty.Never}" Header="Never" Click="DisplayMediaSourceOption_Click"/>
+            </MenuItem>
+        </ContextMenu>
+    </Window.ContextMenu>
     <Canvas>
         <Label x:Name="StatusText" Foreground="White" Content="No session opened" Canvas.Left="16" Canvas.Top="8" FontSize="16" FontFamily="Segoe UI"/>
         <Label x:Name="SongTitle" Foreground="White" Content="TITLE" Canvas.Left="16" Canvas.Top="42" FontSize="36" FontFamily="Segoe UI BOLD"/>
